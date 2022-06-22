@@ -1,7 +1,8 @@
-// make a express app
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -12,8 +13,15 @@ app.get('/', (req, res) => {
 }
 );
 
-app.listen(4000, () => {
-    console.log('Server is running on port 4000');
+mongoose.connect(process.env.MONGODB_URL).then(() => {
+    console.log('Connected to database');
+    app.listen(4000, () => {
+        console.log('Server is running on port 4000');
+    });
+}
+).catch(err => {
+    console.log(err);
 }
 );
+
 
